@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 long get_file_size(FILE* file) {
 	if (!file) { return 0; }
@@ -99,12 +100,21 @@ void print_error(Error err) {
 	(n).type = (t);                \
 	(n).msg = (message);            \
 
+const char* whitespace = " \r";
+const char* delimiters = " \r:\n";
+
+/// Lex the next token from SOURCE, and point to it with BEG and END.
 Error lex(char* source, char** beg, char** end) {
 	Error err = ok;
-	if (!source) {
+	if (!source || !beg || !end) {
 		ERROR_PREP(err, ERROR_ARGUMENTS, "Can not lex empty source.");
 		return err;
 	}
+	*beg = source;
+	*beg += strspn(*beg, whitespace); // Skip beginning whitespace.
+	*end = *beg;
+	*end += strcspn(*beg, delimiters); // Skip to whitespace and delimiters.
+	printf("lexed: %.*s", *end - *beg, *beg);
 	return err;
 }
 
@@ -125,6 +135,10 @@ int main(int argc, char** argv) {
 	char* contents = get_file_contents(path);
 	if (contents) {
 		printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
+
+		Error err = parse_expr(contents);
+		print_error(err);
+
 		free(contents);
 	}
 
