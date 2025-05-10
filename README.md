@@ -1,5 +1,12 @@
 # Aly – A Language for You
 
+![Language](https://img.shields.io/badge/Language-C-blue)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows%20|%20Linux-blue)
+![Arch](https://img.shields.io/badge/Arch-x86--64%20|%20x64-green)
+
+![AlyCompiler Logo](/Resources/LOGO.png)
+
 Aly is a statically typed, whitespace-agnostic programming language designed for simplicity, clarity, and accessibility. Whether you're a new developer or an experienced systems programmer, Aly aims to offer a clean and intuitive experience without sacrificing power or control.
 
 Aly is built entirely from scratch in C, using CMake as the build system and GCC as the target backend for compilation. There are no external dependencies or third-party libraries — every component of the toolchain is handcrafted for clarity and educational value.
@@ -62,7 +69,7 @@ defun foo (a:integer, b:integer):integer {
 
 Aly is open source and actively developed. Contributions are welcome — whether you're interested in working on the lexer, parser, code generation, testing infrastructure, or documentation.
 
-To contribute, see [`CONTRIBUTING.md`](CONTRIBUTING.md) or open an issue to discuss new ideas.
+To contribute, see [CONTRIBUTING.md](CONTRIBUTING.md) or open an issue to discuss new ideas.
 
 ## License
 -------
