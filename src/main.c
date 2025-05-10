@@ -101,7 +101,7 @@ void print_error(Error err) {
 	(n).msg = (message);            \
 
 const char* whitespace = " \r\n";
-const char* delimiters = " \r\n";
+const char* delimiters = " \r\n,():";
 
 /// Lex the next token from SOURCE, and point to it with BEG and END.
 Error lex(char* source, char** beg, char** end) {
@@ -113,7 +113,11 @@ Error lex(char* source, char** beg, char** end) {
 	*beg = source;
 	*beg += strspn(*beg, whitespace); // Skip beginning whitespace.
 	*end = *beg;
+	if (**end == '\0') { return; }
 	*end += strcspn(*beg, delimiters); // Skip everything not in delimiters.
+	if (*end == *beg) {
+		*end += 1;
+	}
 	return err;
 }
 
@@ -137,7 +141,7 @@ int main(int argc, char** argv) {
 	char* path = argv[1];
 	char* contents = get_file_contents(path);
 	if (contents) {
-		printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
+		//printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
 
 		Error err = parse_expr(contents);
 		print_error(err);
