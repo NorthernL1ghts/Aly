@@ -53,11 +53,14 @@ typedef struct Error {
 	enum ErrorType {
 		ERROR_NONE = 0,
 		ERROR_TYPE,
-		ERROR_TODO,
 		ERROR_GENERIC,
-	};
+		ERROR_SYNTAX,
+		ERROR_TODO,
+	} type;
 	char* msg;
 } Error;
+
+Error ok = { ERROR_NONE, NULL };
 
 int main(int argc, char** argv) {
 	if (argc < 2) {
