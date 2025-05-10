@@ -123,6 +123,9 @@ Error lex(char* source, char** beg, char** end) {
 	return err;
 }
 
+// TODO:
+// |-- API to create new node.
+// `-- API to add node as child.
 typedef long long integer_t;
 typedef struct Node {
 	enum NodeType {
@@ -134,7 +137,6 @@ typedef struct Node {
 	union NodeValue {
 		integer_t integer;
 	} value;
-
 	struct Node** children;
 } Node;
 
