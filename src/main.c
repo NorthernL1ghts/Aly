@@ -128,13 +128,14 @@ typedef struct Node {
 	enum NodeType {
 		NODE_TYPE_NONE,
 		NODE_TYPE_INTEGER,
+		NODE_TYPE_PROGRAM,
 		NODE_TYPE_MAX,
 	} type;
 	union NodeValue {
 		integer_t integer;
 	} value;
 
-	struct Node* children[3];
+	struct Node** children;
 } Node;
 
 #define nonep(node) ((node).type == NODE_TYPE_NONE)
@@ -159,7 +160,7 @@ void environment_set() {
 
 }
 
-Error parse_expr(char* source) {
+Error parse_expr(char* source, Node* result) {
 	char* beg = source;
 	char* end = source;
 	Error err = ok;
