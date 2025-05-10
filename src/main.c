@@ -137,6 +137,9 @@ typedef struct Node {
 	struct Node* children[3];
 } Node;
 
+#define nonep(node) ((node).type == NODE_TYPE_NONE)
+#define integerp(node) ((node).type == NODE_TYPE_INTEGER)
+
 // TODO: 
 // |-- API to create new Binding.
 // `-- API to add Binding to environment.
