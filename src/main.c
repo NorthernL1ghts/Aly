@@ -134,7 +134,7 @@ typedef struct Node {
 		integer_t integer;
 	} value;
 
-	struct Node* children[4];
+	struct Node* children[3];
 } Node;
 
 // TODO: 
@@ -178,7 +178,8 @@ int main(int argc, char** argv) {
 	if (contents) {
 		//printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
 
-		Error err = parse_expr(contents);
+		Node expression;
+		Error err = parse_expr(contents, &expression);
 		print_error(err);
 
 		free(contents);
