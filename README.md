@@ -62,7 +62,7 @@ defun foo (a:integer, b:integer):integer {
 
 Aly is open source and actively developed. Contributions are welcome — whether you're interested in working on the lexer, parser, code generation, testing infrastructure, or documentation.
 
-To contribute, see `CONTRIBUTING.md` or open an issue to discuss new ideas.
+To contribute, see [`CONTRIBUTING.md`](CONTRIBUTING.md) or open an issue to discuss new ideas.
 
 ## License
 -------
