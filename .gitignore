@@ -1,52 +1,97 @@
-# Prerequisites
-*.d
-
-# Object files
-*.o
-*.ko
+# ─────────────────────────────
+# Build Artifacts & Binaries
+# ─────────────────────────────
+build/
+bld/
+x64/
+bin/
+bin-int/
+Debug/
+Release/
+DebugMon/
 *.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
+*.o
 *.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
+*.a
 *.so
-*.so.*
-*.dylib
-
-# Executables
+*.dll
 *.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
+*.lib
 *.pdb
+*.idb
+*.out
+*.log
+*.dSYM/
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# ─────────────────────────────
+# CMake
+# ─────────────────────────────
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+Makefile.user
+
+# ─────────────────────────────
+# Ninja
+# ─────────────────────────────
+build.ninja
+
+# ─────────────────────────────
+# Microsoft Visual Studio
+# ─────────────────────────────
+.vs/
+*.sln
+*.suo
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.user
+*.sln.docstates
+*.userosscache
+
+# ─────────────────────────────
+# Visual Studio Code & JetBrains
+# ─────────────────────────────
+*.vscode/
+*.idea/
+
+# ─────────────────────────────
+# Eclipse
+# ─────────────────────────────
+.project
+.cproject
+.settings/
+
+# ─────────────────────────────
+# Code::Blocks
+# ─────────────────────────────
+*.cbp
+*.layout
+
+# ─────────────────────────────
+# Qt Creator
+# ─────────────────────────────
+*.pro.user
+*.qmake.stash
+
+# ─────────────────────────────
+# System Files
+# ─────────────────────────────
+.DS_Store
+
+# ─────────────────────────────
+# Compiler/Analysis Tools
+# ─────────────────────────────
+*.gcda
+*.gcno
+*.gcov
+*.gdb
+*.clangd
+
+# ─────────────────────────────
+# Editor & Temporary Files
+# ─────────────────────────────
+*.swp
+*.swo
+*.dir-locals.el
