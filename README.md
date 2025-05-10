@@ -19,12 +19,12 @@ Aly is built entirely from scratch in C, using CMake as the build system and GCC
 ## Example Syntax
 --------------
 
-You can find a full example in `example.aly`. Here's a small snippet:
+You can find a full example in [example](example.aly) Here's a small snippet:
 ```bash
 a : integer = 0 ; Variable declaration
-a := 0 ; Reassignment
+a := 0 ; Variable reassignment
 
-defun foo(a: integer, b: integer): integer {
+defun foo (a:integer, b:integer):integer {
 ; Function body here
 }
 ```
@@ -33,8 +33,8 @@ defun foo(a: integer, b: integer): integer {
 ----------------
 
 - **Language**: C (ISO C99)
-- **Build System**: CMake (3.20)
-- **Compiler**: Any C compiler can be used, but GCC is preferred for compatibility and familiarity
+- **Build System**: [CMake](https://cmake.org/download/)
+- **Compiler**: Any C Compiler, Aly uses [GCC](https://gcc.gnu.org/install/download.html)
 - **Target**: AT&T-style x86_64 assembly
 
 ## Development Goals
@@ -48,9 +48,9 @@ defun foo(a: integer, b: integer): integer {
 ## Roadmap (In Progress)
 ---------------------
 
-- [x] Basic variable declaration and assignment
-- [x] Static type system
-- [x] Function definitions
+- [ ] Basic variable declaration and assignment
+- [ ] Static type system
+- [ ] Function definitions
 - [ ] Control flow (if, while, for)
 - [ ] Expression evaluation and type checking
 - [ ] Code generation to x86_64 assembly (AT&T syntax)
@@ -67,4 +67,4 @@ To contribute, see `CONTRIBUTING.md` or open an issue to discuss new ideas.
 ## License
 -------
 
-Aly is released under the MIT License. See `LICENSE` for more details.
+Aly is released under the MIT License. See [LICENSE](LICENSE.md) for more details.
