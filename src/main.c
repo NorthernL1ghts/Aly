@@ -108,6 +108,13 @@ Error lex(char* source, char** beg, char** end) {
 	return err;
 }
 
+Error parse_expr(char* source) {
+	char* beg = source;
+	char* end = source;
+	Error err = lex(source, &beg, &end);
+	return err;
+}
+
 int main(int argc, char** argv) {
 	if (argc < 2) {
 		print_usage(argv);
@@ -120,9 +127,6 @@ int main(int argc, char** argv) {
 		printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
 		free(contents);
 	}
-
-	Error err = lex(NULL, NULL, NULL);
-	print_error(err);
 
 	return 0;
 }
