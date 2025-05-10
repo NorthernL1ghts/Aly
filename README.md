@@ -1,5 +1,4 @@
 # Aly – A Language for You
-========================
 
 Aly is a statically typed, whitespace-agnostic programming language designed for simplicity, clarity, and accessibility. Whether you're a new developer or an experienced systems programmer, Aly aims to offer a clean and intuitive experience without sacrificing power or control.
 
