@@ -1,6 +1,6 @@
-a : integer = 0
-a := 0
+a : integer = 0 ; Variable declaration
+a := 0 ; Variable reassignment
 
-defun foo (a: integer, b: integer):integer {
+defun foo (a:integer, b:integer):integer {
 
 }
