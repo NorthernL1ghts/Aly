@@ -22,6 +22,35 @@ Aly is built entirely from scratch in C, using CMake as the build system and GCC
 - **Build System**: Uses CMake for flexibility and cross-platform compatibility.
 - **Transpilation Goals**: Long-term goal includes the ability to transpile Aly to C for even broader support and learning opportunities.
 
+## Dependencies
+
+- **CMake**: [CMake](https://cmake.org/download/)
+- **Compiler**: Any C Compiler, Aly uses [GCC](https://gcc.gnu.org/install/download.html)
+
+## Building
+
+NOTE: Shell commands shown assume a working directory of this repository.
+
+### Generate Build Tree
+
+First, generate a build tree using CMake.
+
+```sh
+cmake -B bld
+```
+
+### Build the Executable
+
+Finally, build an executable from the build tree.
+
+```sh
+cmake --build bld
+```
+
+Alternatively, you can use the provided scripts:
+
+- Windows: `Scripts/Build.bat`
+- Linux/macOS: `Scripts/Build.sh`
 
 ## Example Syntax
 --------------
@@ -40,8 +69,8 @@ defun foo (a:integer, b:integer):integer {
 ----------------
 
 - **Language**: C (ISO C99)
-- **Build System**: [CMake](https://cmake.org/download/)
-- **Compiler**: Any C Compiler, Aly uses [GCC](https://gcc.gnu.org/install/download.html)
+- **Build System**: CMake
+- **Compiler**: Any C Compiler
 - **Target**: AT&T-style x86_64 assembly
 
 ## Development Goals
