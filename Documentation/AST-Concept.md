@@ -6,3 +6,39 @@ These need to be scoped (i.e. nested) to allow for shadowing of global identifie
 - NOTE: Maybe we can handle this as a simple linked list?
 
 [ [ ID -> TYPE ], [ "a" -> integer ] ]
+
+```bash
+================================ BEG AST
+        ROOT
+         │
+         ├── /
+         │    ├── integer
+         │    │     └── 34
+         │    │
+         │    ├── +
+         │    │
+         │    └── integer
+         │          └── 35
+
+        ROOT-x
+         │
+         ├── /
+         │    └── +
+         │         ├── integer
+         │         │     └── 34
+         │         │
+         │         └── integer
+         │               └── 35
+
+        ROOT-x
+         │
+         ├── ?
+         │    ├── condition
+         │    │
+         │    ├── integer
+         │    │     └── 69
+         │    │
+         │    └── integer
+         │          └── 420
+================================ END AST
+```

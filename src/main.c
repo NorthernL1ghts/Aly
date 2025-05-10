@@ -58,6 +58,7 @@ typedef struct Error {
 		ERROR_GENERIC,
 		ERROR_SYNTAX,
 		ERROR_TODO,
+		ERROR_MAX,
 	} type;
 	char* msg;
 } Error;
@@ -69,6 +70,7 @@ void print_error(Error err) {
 		return;
 	}
 	printf("ERROR: ");
+	assert(ERROR_MAX == 6);
 	switch (err.type) {
 	default:
 		printf("Unknown error type...");
@@ -119,6 +121,39 @@ Error lex(char* source, char** beg, char** end) {
 		*end += 1;
 	}
 	return err;
+}
+
+typedef long long integer_t;
+typedef struct Node {
+	enum NodeType {
+		NODE_TYPE_NONE,
+		NODE_TYPE_INTEGER,
+		NODE_TYPE_MAX,
+	} type;
+	union NodeValue {
+		integer_t integer;
+	} value;
+
+	struct Node* children[4];
+} Node;
+
+// TODO: 
+// |-- API to create new Binding.
+// `-- API to add Binding to environment.
+typedef struct Binding {
+	char* id;
+	Node* value;
+	struct Binding* next;
+} Binding;
+
+// TODO: API to create new Environment.
+typedef struct Environment {
+	struct Environment* parent;
+	Binding* bind;
+} Environment;
+
+void environment_set() {
+
 }
 
 Error parse_expr(char* source) {
