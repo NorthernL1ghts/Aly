@@ -22,6 +22,10 @@ Aly is built entirely from scratch in C, using CMake as the build system and GCC
 - **Build System**: Uses CMake for flexibility and cross-platform compatibility.
 - **Transpilation Goals**: Long-term goal includes the ability to transpile Aly to C for even broader support and learning opportunities.
 
+## Usage
+
+Run the executable from a shell with a path to some source code as the only argument. Currently, we print out the furthest progress we are able to make. Eventually, we will output compiled source code.
+
 ## Dependencies
 
 - **CMake**: [CMake](https://cmake.org/download/)
