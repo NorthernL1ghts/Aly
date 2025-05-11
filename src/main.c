@@ -115,7 +115,7 @@ Error lex(char* source, char** beg, char** end) {
 	*beg = source;
 	*beg += strspn(*beg, whitespace); // Skip beginning whitespace.
 	*end = *beg;
-	if (**end == '\0') { return; }
+	if (**end == '\0') { return err; }
 	*end += strcspn(*beg, delimiters); // Skip everything not in delimiters.
 	if (*end == *beg) {
 		*end += 1;
@@ -158,7 +158,9 @@ typedef struct Environment {
 	Binding* bind;
 } Environment;
 
-void environment_set() {}
+void environment_set() {
+	// Do this later...
+}
 
 Error parse_expr(char* source, Node* result) {
 	char* beg = source;
