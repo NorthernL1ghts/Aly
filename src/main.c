@@ -42,7 +42,7 @@ char* get_file_contents(char* path) {
 
 		if (feof(file)) { break; }
 	}
-	contents[bytes_read] = '\0'; // Ensures that we have a string that equals 'contents'.
+	contents[bytes_read] = '\0';
 	return contents;
 }
 
@@ -158,9 +158,7 @@ typedef struct Environment {
 	Binding* bind;
 } Environment;
 
-void environment_set() {
-
-}
+void environment_set() {}
 
 Error parse_expr(char* source, Node* result) {
 	char* beg = source;

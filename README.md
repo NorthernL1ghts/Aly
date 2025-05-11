@@ -14,6 +14,7 @@ Aly is built entirely from scratch in C, using CMake as the build system and GCC
 ## Project Highlights
 ------------------
 
+- **Compiled Language**: Aly generates AT&T-style x86_64 assembly for execution via GCC.
 - **Statically Typed**: Ensures type safety and clear intent in code.
 - **Whitespace-Agnostic**: Aly doesn’t enforce indentation or formatting rules.
 - **Minimal Syntax**: Inspired by simplicity and ease-of-use.
