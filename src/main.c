@@ -172,11 +172,23 @@ typedef struct Node {
 	union NodeValue {
 		integer_t integer;
 	} value;
-	struct Node** children;
+	// Possible TODO: Parent?
+	struct Node* children;
+	struct Node* next_child;
 } Node;
 
 #define nonep(node) ((node).type == NODE_TYPE_NONE)
 #define integerp(node) ((node).type == NODE_TYPE_INTEGER)
+
+void node_free(Node* root) {
+	if (!root) { return; }
+	Node* child = root->children;
+	while (child) {
+		node_free(child);
+		child = child->next_child;
+	}
+	free(root);
+}
 
 // TODO: 
 // |-- API to create new Binding.
