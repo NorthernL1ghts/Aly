@@ -118,6 +118,14 @@ Token* token_create() {
 	return token;
 }
 
+void free_tokens(Token* root) {
+	while (root) {
+		Token* token_to_free = root;
+		root = root->next;
+		free(token_to_free);
+	}
+}
+
 void print_tokens(Token* root) {
 	size_t count = 1;
 	while (root) {
@@ -200,8 +208,7 @@ Error parse_expr(char* source, Node* result) {
 	while ((err = lex(current_token.end, &current_token)).type == ERROR_NONE) {
 		if (current_token.end - current_token.beginning == 0) { break; }
 
-		// NOTE: Previously we were adding to HEAD, but now we do this forward 
-		// to prevent the need to reverse the linked list.
+		// FIXME: This conditional branch could be removed from the loop.
 		if (tokens) {
 			// Overwrite tokens->next
 			token_it->next = token_create();
@@ -214,11 +221,13 @@ Error parse_expr(char* source, Node* result) {
 			memcpy(tokens, &current_token, sizeof(Token));
 			token_it = tokens;
 		}
-
-		printf("lexed: %.*s\n", current_token.end - current_token.beginning, current_token.beginning);
 	}
 
 	print_tokens(tokens);
+
+	//token_it = tokens;
+
+	free_tokens(tokens);
 
 	return err;
 }
