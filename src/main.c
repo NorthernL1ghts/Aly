@@ -118,7 +118,7 @@ Token* token_create() {
 	return token;
 }
 
-void free_tokens(Token* root) {
+void token_free(Token* root) {
 	while (root) {
 		Token* token_to_free = root;
 		root = root->next;
@@ -180,12 +180,16 @@ typedef struct Node {
 #define nonep(node) ((node).type == NODE_TYPE_NONE)
 #define integerp(node) ((node).type == NODE_TYPE_INTEGER)
 
+// TODO: Make more efficient! We could keep track of 
+// allocated pointers and then freeing all in one go.
 void node_free(Node* root) {
 	if (!root) { return; }
 	Node* child = root->children;
+	Node* next_child = NULL;
 	while (child) {
+		next_child = child->next_child;
 		node_free(child);
-		child = child->next_child;
+		child = next_child;
 	}
 	free(root);
 }
@@ -269,7 +273,9 @@ Error parse_expr(char* source, Node* result) {
 		token_it = token_it->next;
 	}
 
-	free_tokens(tokens);
+	token_free(tokens);
+
+	node_free(root);
 
 	return err;
 }
