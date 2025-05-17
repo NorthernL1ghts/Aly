@@ -135,15 +135,14 @@ Error lex(char* source, Token* token) {
 // A : integer = 420
 // 
 // PROGRAM
-// `-- VARIABLE_DECLARATION_INTITIALIZED
-//     `-- VARIABLE_DECLARATION -> INTEGER (420)
-//		   `-- INTEGER -> SYMBOL (A)
+// `-- VARIABLE_DECLARATION_INITIALIZED
+//	   `-- INTEGER (420) -> SYMBOL (A)
 
 // TODO:
 // |-- API to create new node.
 // `-- API to add node as child.
 typedef struct Node {
-	// TODO: Think anout how to document node types and how they fit in the AST.
+	// TODO: Think about how to document node types and how they fit in the AST.
 	enum NodeType {
 		NODE_TYPE_NONE,
 
@@ -154,7 +153,8 @@ typedef struct Node {
 		NODE_TYPE_SYMBOL,
 
 		NODE_TYPE_VARIABLE_DECLARATION,
-		NODE_TYPE_VARIABLE_DECLARATION_INTITIALIZED,
+		NODE_TYPE_VARIABLE_DECLARATION_INITIALIZED,
+
 		NODE_TYPE_PROGRAM,
 		NODE_TYPE_BINARY_OPERATOR,
 		NODE_TYPE_MAX,
@@ -222,7 +222,7 @@ int node_compare(Node* a, Node* b) {
 void print_node(Node* node, size_t indent_level) {
 	if (!node) { return; }
 
-	// indent.
+	// Print indent.
 	for (size_t i = 0; i < indent_level; ++i) {
 		putchar(' ');
 	}
@@ -251,7 +251,7 @@ void print_node(Node* node, size_t indent_level) {
 		printf("VARIABLE DECLARATION");
 		// TODO: Print first child (ID symbol), then type of second child.
 		break;
-	case NODE_TYPE_VARIABLE_DECLARATION_INTITIALIZED:
+	case NODE_TYPE_VARIABLE_DECLARATION_INITIALIZED:
 		printf("TODO: print_node() VAR DECL INIT");
 		break;
 	case NODE_TYPE_PROGRAM:
@@ -385,7 +385,7 @@ Error parse_expr(char* source, char** end, Node* result) {
 			// TODO: Check for valid integer operator.
 			// It would be cool to use operator environment to look up
 			// operators instead of hard-coding them. This would eventually
-			// allow for user-defined operartors, or stuff like that!
+			// allow for user-defined operators, or stuff like that!
 
 		} else {
 			// TODO: Check for unary prefix operators.
