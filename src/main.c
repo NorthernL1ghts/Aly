@@ -132,18 +132,37 @@ Error lex(char* source, Token* token) {
 	return err;
 }
 
+// A : integer = 420
+// 
+// PROGRAM
+// `-- VARIABLE_DECLARATION_INTITIALIZED
+//     `-- VARIABLE_DECLARATION -> INTEGER (420)
+//		   `-- INTEGER -> SYMBOL (A)
+
 // TODO:
 // |-- API to create new node.
 // `-- API to add node as child.
 typedef struct Node {
+	// TODO: Think anout how to document node types and how they fit in the AST.
 	enum NodeType {
 		NODE_TYPE_NONE,
+
+		/// Just an integer.
 		NODE_TYPE_INTEGER,
+
+		/// Anything that isn't another literal type becomes a symbol.
+		NODE_TYPE_SYMBOL,
+
+		NODE_TYPE_VARIABLE_DECLARATION,
+
+		NODE_TYPE_VARIABLE_DECLARATION_INTITIALIZED,
 		NODE_TYPE_PROGRAM,
+		NODE_TYPE_BINARY_OPERATOR,
 		NODE_TYPE_MAX,
 	} type;
 	union NodeValue {
 		long long integer;
+		char* symbol;
 	} value;
 	// Possible TODO: Parent?
 	struct Node* children;
@@ -325,20 +344,32 @@ Error parse_expr(char* source, char** end, Node* result) {
 			if (err.type != ERROR_NONE) {
 				return err;
 			}
+
 			// TODO: Check for valid integer operator.
 			// It would be cool to use operator environment to look up
 			// operators instead of hard-coding them. This would eventually
 			// allow for user-defined operartors, or stuff like that!
+
 		} else {
 			// TODO: Check for unary prefix operators.
 			printf("Unrecognized token: ");
 			print_token(current_token);
 			putchar('\n');
 
+			// TODO: Check tht it isn't a binary operator (we should encounter left
+			// side first and peek forward, rather than encounter it at top level).
+
 			// TODO: Check if valid symbol for variable environment, then 
 			// attempt to pattern match variable access, assignment, declaration, 
 			// or declaration with initialization.
+
+			Node symbol;
+			symbol.type = NODE_TYPE_SYMBOL;
+			symbol.children = NULL;
+			symbol.next_child = NULL;
+			symbol.value.symbol = NULL;
 		}
+
 		printf("Intermediate node: ");
 		print_node(result, 0);
 		putchar('\n');
@@ -364,6 +395,7 @@ int main(int argc, char** argv) {
 		Error err = ok;
 		while ((err = parse_expr(contents, &contents_it, &expression)).type == ERROR_NONE) {
 			if (contents_it == last_contents_it) { break; }
+			print_node(&expression, 0);
 			last_contents_it == contents_it;
 		}
 		print_error(err);

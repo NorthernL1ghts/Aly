@@ -18,7 +18,7 @@
 
 - [x] Completely change `parse_expr`. Accept `char* source, char** end, and Node* Result`. Get rid of `working_node` completely, use result. Get rid of root node allocation, that will be handled at a higher level, just use result.
 
-- [ ] Parse in a while loop, instead of just parsing a single expression.
+- [x] Parse in a while loop, instead of just parsing a single expression.
 
 - Think about how parse could parse within and into a given parsing context:
     Maybe a parsing context contains multiple environments for types, defined variables, etc. This would allow the parse to look up variable access symbols to ensure that they are defined and of the proper type.
@@ -30,6 +30,9 @@
     So, for example, there are prefix unary operators, postfix unary operators, prefix binary operators, infix binary operators, postfix binary operators and more.... How do we programmatically define a new operator in a way that doesn't suck? 
 
 ## Miscellaneous
+
+- Compile to brain-fuck xD:
+    - I am not even sure if this is possible, but it would be funny if we could do this.
 
 - Unnamed Variable:
     - It would be cool if an assignment and/or variable declaration could have no identifier, and work on a singular unnamed variable in the environment.
