@@ -8,9 +8,9 @@
 
 ## FIX THIS URGENTLY!
 
-- [ ] `get_file_contents()` does not check for NULL malloc return value.
+- [x] `get_file_contents()` does not check for NULL malloc return value.
 
-- [ ] Tokens do not need to be linked lists, or have `create/free` functions.
+- [x] Tokens do not need to be linked lists, or have `create/free` functions.
     
 - [ ] We can also get rid of `print_tokens()`, while we are at it.
 
