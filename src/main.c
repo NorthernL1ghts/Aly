@@ -233,6 +233,8 @@ void print_node(Node* node, size_t indent_level) {
 		break;
 	case NODE_TYPE_VARIABLE_DECLARATION:
 		printf("TODO: print_node() VAR DECL");
+		printf("VAR DECL:");
+
 		break;
 	case NODE_TYPE_VARIABLE_DECLARATION_INTITIALIZED:
 		printf("TODO: print_node() VAR DECL INIT");
@@ -394,12 +396,43 @@ Error parse_expr(char* source, char** end, Node* result) {
 			// attempt to pattern match variable access, assignment, declaration, 
 			// or declaration with initialization.
 
+			err = lex(current_token.end, &current_token);
+			if (err.type != ERROR_NONE) {
+				return err;
+			}
+			*end = current_token.end;
+			size_t token_length = current_token.end - current_token.beginning;
+			if (token_length == 0) { break; }
+
+			if (token_string_equalp(":", &current_token)) {
+				err = lex(current_token.end, &current_token);
+				if (err.type != ERROR_NONE) {
+					return err;
+				}
+				*end = current_token.end;
+				size_t token_length = current_token.end - current_token.beginning;
+				if (token_length == 0) { break; }
+
+				// TODO: Look up type in types environment from parsing context.
+				if (token_string_equalp("integer", &current_token)) {
+					Node var_decl;
+					var_decl.children = NULL;
+					var_decl.next_child = NULL;
+					var_decl.type = NODE_TYPE_VARIABLE_DECLARATION;
+
+					*result = var_decl;
+
+					// TODO: Look ahead for "=" assignment operator.
+
+					return ok;
+				}
+			}
+
 			printf("Unrecognized token: ");
 			print_token(current_token);
 			putchar('\n');
 			return err;
 		}
-
 		printf("Intermediate node: ");
 		print_node(result, 0);
 		putchar('\n');
