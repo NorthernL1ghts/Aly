@@ -300,11 +300,9 @@ int parse_integer(Token* token, Node* node) {
 	if (token->end - token->beginning == 1 && *(token->beginning) == '0') {
 		node->type = NODE_TYPE_INTEGER;
 		node->value.integer = 0;
-	}
-	else if ((node->value.integer = strtoll(token->beginning, NULL, 10)) != 0) {
+	} else if ((node->value.integer = strtoll(token->beginning, NULL, 10)) != 0) {
 		node->type = NODE_TYPE_INTEGER;
-	}
-	else { return 0; }
+	} else { return 0; }
 	return 1;
 }
 
@@ -315,22 +313,12 @@ Error parse_expr(char* source, Node* result) {
 	current_token.end = source;
 	Error err = ok;
 
-	Node* root = calloc(1, sizeof(Node));
-	assert(root && "Could not allocate memory for AST Root.");
-	root->type = NODE_TYPE_PROGRAM;
-
-	Node working_node;
 	while ((err = lex(current_token.end, &current_token)).type == ERROR_NONE) {
-		working_node.children = NULL;
-		working_node.next_child = NULL;
-		working_node.type = NODE_TYPE_NONE;
-		working_node.value.integer = 0;
 		size_t token_length = current_token.end - current_token.beginning;
 		if (token_length == 0) { break; }
-		if (parse_integer(&current_token, &working_node)) {
+		if (parse_integer(&current_token, result)) {
 			// Look ahead for binary operators that include integers.
-			Token integer;
-			memcpy(&integer, &current_token, sizeof(Token));
+			Node lhs_integer = *result;
 			err = lex(current_token.end, &current_token);
 			if (err.type != ERROR_NONE) {
 				return err;
@@ -339,8 +327,8 @@ Error parse_expr(char* source, Node* result) {
 			// It would be cool to use operator environment to look up
 			// operators instead of hard-coding them. This would eventually
 			// allow for user-defined operartors, or stuff like that.
-		}
-		else {
+		} else {
+			// TODO: Check for unary prefix operators.
 			printf("Unrecognized token: ");
 			print_token(current_token);
 			putchar('\n');
@@ -350,7 +338,7 @@ Error parse_expr(char* source, Node* result) {
 			// or declaration with initialization.
 		}
 		printf("Found node: ");
-		print_node(&working_node, 0);
+		print_node(&working_result, 0);
 		putchar('\n');
 	}
 

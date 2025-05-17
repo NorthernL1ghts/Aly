@@ -14,8 +14,6 @@
     
 - [x] We can also get rid of `print_tokens()`, while we are at it.
 
-- [ ] When lexing, zero out given token pointer using `memset()`.
-
 - [ ] Get rid of `integer_t`, just use long long and get on with it.
 
 - [ ] Completely change `parse_expr`. Accept `char* source, char** end, and Node* Result`. Get rid of `working_node` completely, use result. Get rid of root node allocation, that will be handled at a higher level, just use result.
