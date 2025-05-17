@@ -24,9 +24,9 @@ char* get_file_contents(char* path) {
 		printf("Could not open file at %s\n", path);
 		return NULL;
 	}
-	fseek(file, 0, SEEK_SET);
 	long size = get_file_size(file);
 	char* contents = malloc(size + 1);
+	assert(contents && "Could not allocate buffer for file contents");
 	char* write_it = contents;
 	size_t bytes_read = 0;
 	while (bytes_read < size) {
