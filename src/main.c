@@ -135,7 +135,6 @@ Error lex(char* source, Token* token) {
 // TODO:
 // |-- API to create new node.
 // `-- API to add node as child.
-typedef long long integer_t;
 typedef struct Node {
 	enum NodeType {
 		NODE_TYPE_NONE,
@@ -144,7 +143,7 @@ typedef struct Node {
 		NODE_TYPE_MAX,
 	} type;
 	union NodeValue {
-		integer_t integer;
+		long long integer;
 	} value;
 	// Possible TODO: Parent?
 	struct Node* children;
@@ -306,7 +305,7 @@ int parse_integer(Token* token, Node* node) {
 	return 1;
 }
 
-Error parse_expr(char* source, Node* result) {
+Error parse_expr(char* source, char** end, Node* result) {
 	size_t token_count = 0;
 	Token current_token;
 	current_token.beginning = source;
@@ -326,7 +325,7 @@ Error parse_expr(char* source, Node* result) {
 			// TODO: Check for valid integer operator.
 			// It would be cool to use operator environment to look up
 			// operators instead of hard-coding them. This would eventually
-			// allow for user-defined operartors, or stuff like that.
+			// allow for user-defined operartors, or stuff like that!
 		} else {
 			// TODO: Check for unary prefix operators.
 			printf("Unrecognized token: ");
@@ -337,8 +336,8 @@ Error parse_expr(char* source, Node* result) {
 			// attempt to pattern match variable access, assignment, declaration, 
 			// or declaration with initialization.
 		}
-		printf("Found node: ");
-		print_node(&working_result, 0);
+		printf("Intermediate node: ");
+		print_node(result, 0);
 		putchar('\n');
 	}
 
@@ -357,7 +356,13 @@ int main(int argc, char** argv) {
 		//printf("Contents of %s:\n---\n\"%s\"\n---\n", path, contents);
 
 		Node expression;
-		Error err = parse_expr(contents, &expression);
+		char* contents_it = contents;
+		char* last_contents_it = NULL;
+		Error err = ok;
+		while ((err = parse_expr(contents, &contents_it, &expression)).type == ERROR_NONE) {
+			if (contents_it == last_contents_it) { break; }
+			last_contents_it == contents_it;
+		}
 		print_error(err);
 
 		free(contents);

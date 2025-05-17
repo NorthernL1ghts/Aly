@@ -16,7 +16,7 @@
 
 - [ ] Get rid of `integer_t`, just use long long and get on with it.
 
-- [ ] Completely change `parse_expr`. Accept `char* source, char** end, and Node* Result`. Get rid of `working_node` completely, use result. Get rid of root node allocation, that will be handled at a higher level, just use result.
+- [x] Completely change `parse_expr`. Accept `char* source, char** end, and Node* Result`. Get rid of `working_node` completely, use result. Get rid of root node allocation, that will be handled at a higher level, just use result.
 
 - [ ] Parse in a while loop, instead of just parsing a single expression.
 
