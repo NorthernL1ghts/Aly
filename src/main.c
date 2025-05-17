@@ -171,6 +171,7 @@ typedef struct Node {
 
 #define nonep(node) ((node).type == NODE_TYPE_NONE)
 #define integerp(node) ((node).type == NODE_TYPE_INTEGER)
+#define symbolp(node) ((node).type == NODE_TYPE_SYMBOL)
 
 /// @return Boolean-like value; 1 upon success, 0 for failure.
 int node_compare(Node* a, Node* b) {
@@ -245,6 +246,9 @@ void node_free(Node* root) {
 		next_child = child->next_child;
 		node_free(child);
 		child = next_child;
+	}
+	if (symbolp(*root) && root->value.symbol) {
+		free(root->value.symbol);
 	}
 	free(root);
 }
@@ -337,6 +341,7 @@ Error parse_expr(char* source, char** end, Node* result) {
 	while ((err = lex(current_token.end, &current_token)).type == ERROR_NONE) {
 		size_t token_length = current_token.end - current_token.beginning;
 		if (token_length == 0) { break; }
+		*end = current_token.end;
 		if (parse_integer(&current_token, result)) {
 			// Look ahead for binary operators that include integers.
 			Node lhs_integer = *result;
@@ -352,9 +357,6 @@ Error parse_expr(char* source, char** end, Node* result) {
 
 		} else {
 			// TODO: Check for unary prefix operators.
-			printf("Unrecognized token: ");
-			print_token(current_token);
-			putchar('\n');
 
 			// TODO: Check tht it isn't a binary operator (we should encounter left
 			// side first and peek forward, rather than encounter it at top level).
@@ -368,6 +370,17 @@ Error parse_expr(char* source, char** end, Node* result) {
 			symbol.children = NULL;
 			symbol.next_child = NULL;
 			symbol.value.symbol = NULL;
+
+			char* symbol_string = malloc(token_length + 1);
+			assert(symbol_string && "Could not allocate memory for symbol");
+			memcpy(symbol_string, current_token.beginning, token_length);
+			symbol_string[token_length] = '\0';
+			symbol.value.symbol = symbol_string;
+
+			printf("Unrecognized token: ");
+			print_token(current_token);
+			putchar('\n');
+			return err;
 		}
 
 		printf("Intermediate node: ");
@@ -393,11 +406,13 @@ int main(int argc, char** argv) {
 		char* contents_it = contents;
 		char* last_contents_it = NULL;
 		Error err = ok;
-		while ((err = parse_expr(contents, &contents_it, &expression)).type == ERROR_NONE) {
+		long max = 1;
+		while ((err = parse_expr(contents, &contents_it, &expression)).type == ERROR_NONE && max-- > 0) {
 			if (contents_it == last_contents_it) { break; }
 			print_node(&expression, 0);
-			last_contents_it == contents_it;
+			last_contents_it = contents_it;
 		}
+		printf("max: %ld\n", max);
 		print_error(err);
 
 		free(contents);
