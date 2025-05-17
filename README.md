@@ -30,7 +30,7 @@ Run the executable from a shell with a path to some source code as the only argu
 ## Dependencies
 
 - **CMake**: [CMake](https://cmake.org/download/)
-- **Compiler**: Any C Compiler. I recommend [GCC](https://gcc.gnu.org/install/download.html)
+- **Compiler**: Any C Compiler. We like [GCC](https://gcc.gnu.org/install/download.html)
 
 ## Building
 
