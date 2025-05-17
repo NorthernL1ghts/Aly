@@ -172,6 +172,22 @@ typedef struct Node {
 #define integerp(node) ((node).type == NODE_TYPE_INTEGER)
 #define symbolp(node) ((node).type == NODE_TYPE_SYMBOL)
 
+void node_add_child(Node* parent, Node* new_child) {
+	if (!parent || !new_child) { return; }
+	Node* allocated_child = malloc(sizeof(Node));
+	assert(allocated_child && "Could not allocate new child Node for AST");
+	*allocated_child = *new_child;
+	if (parent->children) {
+		Node* child = parent->children;
+		while (child->next_child) {
+			child = child->next_child;
+		}
+		child->next_child = allocated_child;
+	} else {
+		parent->children = allocated_child;
+	}
+}
+
 /// @return Boolean-like value; 1 upon success, 0 for failure.
 int node_compare(Node* a, Node* b) {
 	if (!a || !b) {
@@ -232,9 +248,8 @@ void print_node(Node* node, size_t indent_level) {
 		printf("TODO: print_node() BINARY OPERATOR");
 		break;
 	case NODE_TYPE_VARIABLE_DECLARATION:
-		printf("TODO: print_node() VAR DECL");
-		printf("VAR DECL:");
-
+		printf("VARIABLE DECLARATION");
+		// TODO: Print first child (ID symbol), then type of second child.
 		break;
 	case NODE_TYPE_VARIABLE_DECLARATION_INTITIALIZED:
 		printf("TODO: print_node() VAR DECL INIT");
@@ -419,6 +434,13 @@ Error parse_expr(char* source, char** end, Node* result) {
 					var_decl.children = NULL;
 					var_decl.next_child = NULL;
 					var_decl.type = NODE_TYPE_VARIABLE_DECLARATION;
+
+					Node type_node;
+					memset(&type_node, 0, sizeof(Node));
+					type_node.type = NODE_TYPE_INTEGER;
+
+					node_add_child(&var_decl, &type_node);
+					node_add_child(&var_decl, &symbol);
 
 					*result = var_decl;
 
